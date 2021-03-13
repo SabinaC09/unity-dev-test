@@ -26,11 +26,16 @@ namespace GameCode.Mineshaft
         public double NextShaftPrice { get; }
         public IReadOnlyReactiveProperty<bool> CanBuyNextShaft { get; }
 
+        private IReactiveProperty<double> _carryingCapacity;
+        public IReactiveProperty<double> CarryingCapacity => _carryingCapacity;
+
         public MineshaftModel(int shaftNumber, int level, GameConfig config, FinanceModel financeModel, CompositeDisposable disposable)
         {
             MineshaftNumber = shaftNumber;
             _config = config;
             _financeModel = financeModel;
+            _carryingCapacity= new ReactiveProperty<double>(0);
+
             
             _level = new ReactiveProperty<int>(level);
             StashAmount = new ReactiveProperty<double>();

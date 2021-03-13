@@ -14,6 +14,8 @@ namespace GameCode.Elevator
         private readonly IReactiveProperty<double> _upgradePrice;
         private readonly IReactiveProperty<int> _level;
 
+        public IReactiveProperty<int> ElevatorLevel => _level;
+
         public ElevatorModel(int level, GameConfig config, FinanceModel financeModel, CompositeDisposable disposable)
         {
             _config = config;

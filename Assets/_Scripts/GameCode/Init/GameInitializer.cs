@@ -47,7 +47,7 @@ namespace GameCode.Init
             new WarehouseController(_warehouseView, warehouseModel, elevatorModel, _gameConfig, disposable);
 
             //Hud
-            new HudController(_hudView, financeModel, tutorialModel, mineshaftPool, disposable);
+            new HudController(_hudView, financeModel, tutorialModel, mineshaftPool, warehouseModel, elevatorModel, disposable);
         }
     }
 }

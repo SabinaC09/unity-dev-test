@@ -15,6 +15,7 @@ namespace GameCode.Warehouse
         private const double BasePrice = 60;
         private readonly IReactiveProperty<double> _upgradePrice;
         private readonly IReactiveProperty<int> _level;
+        public IReactiveProperty<int> WarehouseLevel => _level;
 
         public WarehouseModel(int level, GameConfig config, FinanceModel financeModel, CompositeDisposable disposable)
         {

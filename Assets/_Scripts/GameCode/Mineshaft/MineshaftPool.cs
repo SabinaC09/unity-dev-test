@@ -11,11 +11,16 @@ namespace GameCode.Mineshaft
         private IReactiveProperty<int> _mineshaftCount;
         public IReactiveProperty<int> MineshaftCount => _mineshaftCount;
 
+        private IReactiveCollection<MineshaftModel> _mineshaftModels;
+        public IReactiveCollection<MineshaftModel> MineshaftModels => _mineshaftModels;
+
+
         public MineshaftPool()
         {
             _views = new Dictionary<int, MineshaftView>();
             _models = new Dictionary<int, MineshaftModel>();
             _mineshaftCount = new ReactiveProperty<int>(0);
+            _mineshaftModels = new ReactiveCollection<MineshaftModel>();
         }
 
         public void RegisterMineshaft(int mineshaftNumber, MineshaftModel model, MineshaftView view)
@@ -23,6 +28,7 @@ namespace GameCode.Mineshaft
             _views.Add(mineshaftNumber, view);
             _models.Add(mineshaftNumber, model);
             _mineshaftCount.Value++;
+            _mineshaftModels.Add(model);
         }
 
         public int GetCount()
