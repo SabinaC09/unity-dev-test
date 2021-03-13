@@ -1,5 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+
 
 namespace GameCode.UI
 {
@@ -7,6 +10,14 @@ namespace GameCode.UI
     {
         [SerializeField] private TMP_Text _cashAmount;
         [SerializeField] private GameObject _tooltip;
+        [SerializeField] private Button _statisticsButton;
+        [SerializeField] private GameObject _statisticsPanel;
+
+        [Header("Prefabs")]
+        [SerializeField] private GameObject _statisticsRowPrefab;
+
+        private List<StatisticsRow> _statisticsRows=new List<StatisticsRow>();
+
 
         public double CashAmount
         {
@@ -17,5 +28,13 @@ namespace GameCode.UI
         {
             set => _tooltip.gameObject.SetActive(value);
         }
+
+        public Button StatisticsButton => _statisticsButton;
+
+        public GameObject StatisticsPanel => _statisticsPanel;
+
+        public GameObject StatisticsRowPrefab => _statisticsRowPrefab;
+
+        public List<StatisticsRow> StatisticsRows => _statisticsRows;
     }
 }

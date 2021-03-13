@@ -1,6 +1,7 @@
 ﻿using GameCode.Finance;
 using GameCode.Tutorial;
 using UniRx;
+using UnityEngine;
 
 namespace GameCode.UI
 {
@@ -12,14 +13,27 @@ namespace GameCode.UI
             CompositeDisposable disposable)
         {
             _view = view;
-            
+
+            _view.StatisticsButton.onClick.AddListener(onClick);
+
+            var moneyRow = GameObject.Instantiate(_view.StatisticsRowPrefab, _view.StatisticsPanel.transform).GetComponent<StatisticsRow>();
+            moneyRow.key.text = "Money";
+
             financeModel.Money
-                .Subscribe(money => view.CashAmount = money)
+                .Subscribe(money => { view.CashAmount = money; moneyRow.value.text = money+""; })
                 .AddTo(disposable);
             
             tutorialModel.ShouldShowTooltip
                 .Subscribe(UpdateTooltipVisibility)
                 .AddTo(disposable);
+
+            
+            
+        }
+
+        private void onClick()
+        {
+            _view.StatisticsPanel.SetActive(!_view.StatisticsPanel.activeSelf);
         }
 
         private void UpdateTooltipVisibility(bool shouldShowTooltip)
