@@ -29,8 +29,7 @@ namespace GameCode.Init
             
             new CameraController(_cameraView, tutorialModel);
 
-            //Hud
-            new HudController(_hudView, financeModel, tutorialModel, disposable);
+            
 
             //Mineshaft
             var mineshaftPool = new MineshaftPool();
@@ -46,6 +45,9 @@ namespace GameCode.Init
             //Warehouse
             var warehouseModel = new WarehouseModel(1, _gameConfig, financeModel, disposable);
             new WarehouseController(_warehouseView, warehouseModel, elevatorModel, _gameConfig, disposable);
+
+            //Hud
+            new HudController(_hudView, financeModel, tutorialModel, mineshaftPool, disposable);
         }
     }
 }
