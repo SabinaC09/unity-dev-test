@@ -21,6 +21,8 @@ namespace GameCode.Init
         [SerializeField] private MineshaftView _mineshaftView;
         [SerializeField] private ElevatorView _elevatorView;
         [SerializeField] private WarehouseView _warehouseView;
+
+        int mineIndex;
         
         GameStateModel _gameState;
 
@@ -82,7 +84,9 @@ namespace GameCode.Init
               .Subscribe(level =>  _gameState.ElevatorLevel = level)
               .AddTo(disposable);
 
-            _hudView.RestartButton.OnClickAsObservable().Subscribe(_ => restartClick());
+            _hudView.RestartButton.OnClickAsObservable().Subscribe(_ => restartClick()).AddTo(disposable);
+            _hudView.SwitchMineButton.OnClickAsObservable().Subscribe(_ => SceneManager.LoadScene(1 - mineIndex)).AddTo(disposable);
+            _hudView.SpeedBoostButton.OnClickAsObservable().Subscribe(_ => Time.timeScale = Time.timeScale >1.5f ? 1 : 2).AddTo(disposable);
         }
 
         private void OnDestroy()
@@ -92,15 +96,16 @@ namespace GameCode.Init
 
         void LoadGameState()
         {
-            string stateString= PlayerPrefs.GetString("state");
+            mineIndex = SceneManager.GetActiveScene().buildIndex;
 
+            string stateString= PlayerPrefs.GetString("state" + mineIndex);
             _gameState = JsonConvert.DeserializeObject<GameStateModel>(stateString) ?? new GameStateModel();
         }
 
         void SaveGameState()
         {
             string stateString = JsonConvert.SerializeObject(_gameState);
-            PlayerPrefs.SetString("state", stateString);
+            PlayerPrefs.SetString("state" + mineIndex, stateString);
         }
 
         public void restartClick()
