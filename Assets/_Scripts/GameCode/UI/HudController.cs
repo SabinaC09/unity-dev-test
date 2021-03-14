@@ -55,17 +55,23 @@ namespace GameCode.UI
             headerRow.key.text = "Mineshaft";
             headerRow.value.text = "Capacity";
 
-            var firstMineshaftRow = GameObject.Instantiate(_view.StatisticsRowPrefab, _view.StatisticsPanel.transform).GetComponent<StatisticsRow>();
-            firstMineshaftRow.key.text = mineshaftPool.MineshaftModels[0].MineshaftNumber + " -level:" +mineshaftPool.MineshaftModels[0].Level;
-            firstMineshaftRow.value.text = mineshaftPool.MineshaftModels[0].CarryingCapacity.Value.ToString("F0");
-            mineshaftPool.MineshaftModels[0].CarryingCapacity
-                .Subscribe(capacity => firstMineshaftRow.value.text = capacity.ToString("F0"))
-                .AddTo(disposable);
 
-            mineshaftPool.MineshaftModels[0].Level
-                .Subscribe(level => firstMineshaftRow.key.text = mineshaftPool.MineshaftModels[0].MineshaftNumber + " -level:" + level)
-                .AddTo(disposable);
 
+            foreach(var model in mineshaftPool.MineshaftModels)
+            {
+                var initialMineshaftRows = GameObject.Instantiate(_view.StatisticsRowPrefab, _view.StatisticsPanel.transform).GetComponent<StatisticsRow>();
+                initialMineshaftRows.key.text = model.MineshaftNumber + " -level:" + model.Level;
+                initialMineshaftRows.value.text = model.CarryingCapacity.Value.ToString("F0");
+                model.CarryingCapacity
+                    .Subscribe(capacity => initialMineshaftRows.value.text = capacity.ToString("F0"))
+                    .AddTo(disposable);
+
+                model.Level
+                    .Subscribe(level => initialMineshaftRows.key.text = model.MineshaftNumber + " -level:" + level)
+                    .AddTo(disposable);
+            }
+
+            
             mineshaftPool.MineshaftModels
                 .ObserveAdd()
                 .Subscribe(ev => {
