@@ -8,10 +8,11 @@ namespace GameCode.Finance
         private readonly IReactiveProperty<double> _money;
         public IReadOnlyReactiveProperty<double> Money => _money;
 
-        public FinanceModel()
+        public FinanceModel(GameStateModel gameStateModel)
         {
-            _money = new ReactiveProperty<double>(500);
+            _money = new ReactiveProperty<double>(gameStateModel.Money);
         }
+
 
         public void AddResource(double amount)
         {

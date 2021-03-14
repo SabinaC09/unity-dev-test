@@ -7,6 +7,7 @@ using GameCode.UI;
 using GameCode.Warehouse;
 using UniRx;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace GameCode.Init
 {
@@ -19,13 +20,16 @@ namespace GameCode.Init
         [SerializeField] private MineshaftView _mineshaftView;
         [SerializeField] private ElevatorView _elevatorView;
         [SerializeField] private WarehouseView _warehouseView;
+        
+        GameStateModel _gameState;
 
         private void Start()
         {
+            LoadGameState();
             var disposable = new CompositeDisposable().AddTo(this);
 
             var tutorialModel = new TutorialModel();
-            var financeModel = new FinanceModel();
+            var financeModel = new FinanceModel(_gameState);
             
             new CameraController(_cameraView, tutorialModel);
 
@@ -39,15 +43,47 @@ namespace GameCode.Init
             mineshaftPool.RegisterMineshaft(1, mineshaftModel, _mineshaftView);
 
             //Elevator
-            var elevatorModel = new ElevatorModel(1, _gameConfig, financeModel, disposable);
+            var elevatorModel = new ElevatorModel(_gameState.ElevatorLevel, _gameConfig, financeModel, disposable);
             new ElevatorController(_elevatorView, elevatorModel, mineshaftPool, _gameConfig, disposable);
             
             //Warehouse
-            var warehouseModel = new WarehouseModel(1, _gameConfig, financeModel, disposable);
+            var warehouseModel = new WarehouseModel(_gameState.WarehouseLevel, _gameConfig, financeModel, disposable);
             new WarehouseController(_warehouseView, warehouseModel, elevatorModel, _gameConfig, disposable);
 
             //Hud
             new HudController(_hudView, financeModel, tutorialModel, mineshaftPool, warehouseModel, elevatorModel, disposable);
+
+            financeModel.Money
+              .Subscribe(money => _gameState.Money = money)
+              .AddTo(disposable);
+
+            warehouseModel.Level
+              .Subscribe(level =>  _gameState.WarehouseLevel = level)
+              .AddTo(disposable);
+
+            elevatorModel.Level
+              .Subscribe(level =>  _gameState.ElevatorLevel = level)
+              .AddTo(disposable);
+
+
+        }
+
+        private void OnDestroy()
+        {
+            SaveGameState();
+        }
+
+        void LoadGameState()
+        {
+            string stateString= PlayerPrefs.GetString("state");
+
+            _gameState = JsonConvert.DeserializeObject<GameStateModel>(stateString) ?? new GameStateModel();
+        }
+
+        void SaveGameState()
+        {
+            string stateString = JsonConvert.SerializeObject(_gameState);
+            PlayerPrefs.SetString("state", stateString);
         }
     }
 }
