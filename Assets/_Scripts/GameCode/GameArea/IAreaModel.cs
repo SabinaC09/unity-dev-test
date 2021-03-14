@@ -8,6 +8,6 @@ namespace GameCode.GameArea
         IReadOnlyReactiveProperty<double> UpgradePrice { get; }
         IReadOnlyReactiveProperty<int> Level { get; }
         double SkillMultiplier { get; set; }
-        void Upgrade();
+        void Upgrade(bool free = false);
     }
 }

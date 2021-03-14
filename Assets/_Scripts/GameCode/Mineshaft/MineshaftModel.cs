@@ -54,15 +54,19 @@ namespace GameCode.Mineshaft
                 .AddTo(disposable);
         }
 
-        public void Upgrade()
+        public void Upgrade(bool free = false)
         {
-            if (_financeModel.Money.Value < _upgradePrice.Value)
+            if (!free && _financeModel.Money.Value < _upgradePrice.Value )
                 return;
 
             var price = _upgradePrice.Value;
             SkillMultiplier *= _config.ActorUpgradeSkillIncrement;
             _upgradePrice.Value *= _config.ActorUpgradePriceIncrement;
-            _financeModel.DrawResource(price);
+
+            if(free == false)
+            {
+                _financeModel.DrawResource(price);
+            }
             _level.Value++;
         }
 

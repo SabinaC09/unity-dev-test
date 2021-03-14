@@ -40,7 +40,7 @@ namespace GameCode.Warehouse
         public IReadOnlyReactiveProperty<double> UpgradePrice => _upgradePrice;
         public IReadOnlyReactiveProperty<int> Level => _level;
 
-        public void Upgrade()
+        public void Upgrade(bool free = false)
         {
             if (_financeModel.Money.Value < _upgradePrice.Value) return;
 

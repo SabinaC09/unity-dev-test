@@ -50,9 +50,15 @@ namespace GameCode.Mineshaft
             
         }
 
-        private void Upgrade()
+        public void Upgrade(bool free = false)
         {
-            _model.Upgrade();
+            _model.Upgrade(free);
+
+            if(!free)
+            {
+                _gameStateModel.MineshaftLevels[_model.MineshaftNumber - 1]++;
+            }
+           
         }
 
         public void BuyNextShaft(bool free = false)

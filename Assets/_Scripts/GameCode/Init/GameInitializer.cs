@@ -33,24 +33,29 @@ namespace GameCode.Init
             
             new CameraController(_cameraView, tutorialModel);
 
-            
+
+            if (_gameState.MineshaftLevels.Count == 0)
+            {
+                _gameState.MineshaftLevels.Add(1);
+            }
 
             //Mineshaft
             var mineshaftPool = new MineshaftPool();
             var mineshaftFactory = new MineshaftFactory(mineshaftPool, financeModel, _gameConfig, _gameState, disposable);
-            var mineshaftModel = new MineshaftModel(1, 1, _gameConfig, financeModel, disposable);
+            var mineshaftModel = new MineshaftModel(1, _gameState.MineshaftLevels[0], _gameConfig, financeModel, disposable);
             var mineshaftController = new MineshaftController(_mineshaftView, mineshaftModel, mineshaftFactory, _gameConfig,_gameState, disposable);
             mineshaftPool.RegisterMineshaft(1, mineshaftModel, _mineshaftView);
 
-            if(_gameState.MineshaftLevels.Count == 0)
-            {
-                _gameState.MineshaftLevels.Add(1);
-            }
+           
 
             for(int i = 1; i < _gameState.MineshaftLevels.Count; i++)
             {
                 mineshaftController.BuyNextShaft(true);
                 mineshaftController = mineshaftController.NextController;
+                for(int j=0; j < _gameState.MineshaftLevels[i] - 1; j++)
+                {
+                    mineshaftController.Upgrade(true);
+                }
             }
 
             //Elevator
