@@ -5,6 +5,7 @@ using GameCode.Tutorial;
 using GameCode.Warehouse;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameCode.UI
 {
@@ -17,7 +18,8 @@ namespace GameCode.UI
         {
             _view = view;
 
-            _view.StatisticsButton.onClick.AddListener(onClick);
+            _view.StatisticsButton.OnClickAsObservable().Subscribe(_ => statisticsClick());
+            
 
             var moneyRow = GameObject.Instantiate(_view.StatisticsRowPrefab, _view.StatisticsPanel.transform).GetComponent<StatisticsRow>();
             moneyRow.key.text = "Money";
@@ -92,7 +94,7 @@ namespace GameCode.UI
 
         }
 
-        private void onClick()
+        private void statisticsClick()
         {
             _view.StatisticsPanel.SetActive(!_view.StatisticsPanel.activeSelf);
         }

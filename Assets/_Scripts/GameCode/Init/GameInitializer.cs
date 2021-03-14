@@ -8,6 +8,7 @@ using GameCode.Warehouse;
 using UniRx;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 namespace GameCode.Init
 {
@@ -81,7 +82,7 @@ namespace GameCode.Init
               .Subscribe(level =>  _gameState.ElevatorLevel = level)
               .AddTo(disposable);
 
-
+            _hudView.RestartButton.OnClickAsObservable().Subscribe(_ => restartClick());
         }
 
         private void OnDestroy()
@@ -100,6 +101,13 @@ namespace GameCode.Init
         {
             string stateString = JsonConvert.SerializeObject(_gameState);
             PlayerPrefs.SetString("state", stateString);
+        }
+
+        public void restartClick()
+        {
+            PlayerPrefs.DeleteAll();
+            _gameState = new GameStateModel();
+            SceneManager.LoadScene(0);
         }
     }
 }

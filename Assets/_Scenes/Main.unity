@@ -4656,12 +4656,12 @@ PrefabInstance:
     - target: {fileID: 198845202933185790, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198845202933185790, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198845203661073323, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
@@ -4781,22 +4781,22 @@ PrefabInstance:
     - target: {fileID: 198845204206892764, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198845204206892764, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 220046258275565971, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 220046258275565971, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 484354317523878586, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
@@ -4852,6 +4852,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807112411187464563, guid: ac087666426c7dd4caaf7b0b22f4334b,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807112411187464563, guid: ac087666426c7dd4caaf7b0b22f4334b,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4227013296936245214, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}
@@ -4932,11 +4942,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7307138600338841691, guid: ac087666426c7dd4caaf7b0b22f4334b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.9000244
       objectReference: {fileID: 0}
     - target: {fileID: 7759268726346018009, guid: ac087666426c7dd4caaf7b0b22f4334b,
         type: 3}

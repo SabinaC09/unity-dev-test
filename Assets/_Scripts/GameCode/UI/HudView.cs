@@ -12,6 +12,7 @@ namespace GameCode.UI
         [SerializeField] private GameObject _tooltip;
         [SerializeField] private Button _statisticsButton;
         [SerializeField] private GameObject _statisticsPanel;
+        [SerializeField] private Button _restartButton;
 
         [Header("Prefabs")]
         [SerializeField] private GameObject _statisticsRowPrefab;
@@ -36,5 +37,7 @@ namespace GameCode.UI
         public GameObject StatisticsRowPrefab => _statisticsRowPrefab;
 
         public List<StatisticsRow> StatisticsRows => _statisticsRows;
+
+        public Button RestartButton => _restartButton;
     }
 }
