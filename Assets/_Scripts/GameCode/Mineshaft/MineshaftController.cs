@@ -9,13 +9,19 @@ namespace GameCode.Mineshaft
         private readonly MineshaftView _view;
         private readonly MineshaftModel _model;
         private readonly IMineshaftFactory _mineshaftFactory;
+        private readonly GameStateModel _gameStateModel;
 
-        public MineshaftController(MineshaftView view, MineshaftModel model, IMineshaftFactory mineshaftFactory,
-            GameConfig gameConfig, CompositeDisposable disposable)
+        private MineshaftController _nextController;
+        public MineshaftController NextController => _nextController;
+
+        public MineshaftController(MineshaftView view, MineshaftModel model, IMineshaftFactory mineshaftFactory, 
+            GameConfig gameConfig, GameStateModel gameStateModel, CompositeDisposable disposable)
         {
             _view = view;
             _model = model;
             _mineshaftFactory = mineshaftFactory;
+            _gameStateModel = gameStateModel;
+
             var workerModel = new WorkerModel(model, gameConfig.MineshaftWorkerConfig, disposable);
             new MineshaftWorkerController(view, model, workerModel, disposable);
 
@@ -49,11 +55,16 @@ namespace GameCode.Mineshaft
             _model.Upgrade();
         }
 
-        private void BuyNextShaft()
+        public void BuyNextShaft(bool free = false)
         {
-            _model.BuyNextShaft();
+            if(free == false)
+            {
+                _model.BuyNextShaft();
+                _gameStateModel.MineshaftLevels.Add(1);
+            }
+            
             _view.NextShaftView.Visible = false;
-            _mineshaftFactory.CreateMineshaft(_model.MineshaftNumber + 1, 1, _view.NextShaftView.NextShaftPosition);
+            _nextController = _mineshaftFactory.CreateMineshaft(_model.MineshaftNumber + 1, 1, _view.NextShaftView.NextShaftPosition);
         }
     }
 }

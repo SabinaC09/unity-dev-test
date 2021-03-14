@@ -37,10 +37,21 @@ namespace GameCode.Init
 
             //Mineshaft
             var mineshaftPool = new MineshaftPool();
-            var mineshaftFactory = new MineshaftFactory(mineshaftPool, financeModel, _gameConfig, disposable);
+            var mineshaftFactory = new MineshaftFactory(mineshaftPool, financeModel, _gameConfig, _gameState, disposable);
             var mineshaftModel = new MineshaftModel(1, 1, _gameConfig, financeModel, disposable);
-            new MineshaftController(_mineshaftView, mineshaftModel, mineshaftFactory, _gameConfig, disposable);
+            var mineshaftController = new MineshaftController(_mineshaftView, mineshaftModel, mineshaftFactory, _gameConfig,_gameState, disposable);
             mineshaftPool.RegisterMineshaft(1, mineshaftModel, _mineshaftView);
+
+            if(_gameState.MineshaftLevels.Count == 0)
+            {
+                _gameState.MineshaftLevels.Add(1);
+            }
+
+            for(int i = 1; i < _gameState.MineshaftLevels.Count; i++)
+            {
+                mineshaftController.BuyNextShaft(true);
+                mineshaftController = mineshaftController.NextController;
+            }
 
             //Elevator
             var elevatorModel = new ElevatorModel(_gameState.ElevatorLevel, _gameConfig, financeModel, disposable);
